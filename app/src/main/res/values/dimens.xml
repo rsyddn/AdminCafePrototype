@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //Margin and Padding
+    <dimen name="default_padding_margin">16dp</dimen>
+    <dimen name="half_padding_margin">8dp</dimen>
+    <dimen name="quarter_padding_margin">4dp</dimen>
+
+    //Text Size
+    <dimen name="title_app_name">32sp</dimen>
+    <dimen name="title_start_activity">100dp</dimen>
+</resources>
