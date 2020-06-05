@@ -2,15 +2,19 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardSchedule"
+    style="@style/Widget.MaterialComponents.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="20dp">
+    android:layout_marginTop="16dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    app:cardPreventCornerOverlap="false"
+    app:contentPadding="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/txtPromoName"
@@ -22,23 +26,60 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/txtPromoDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="Lorem Ipsum"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtPromoName" />
+
+        <TextView
+            android:id="@+id/PromoCreDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="Created :"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/txtPromoCreateDate"
+            app:layout_constraintTop_toBottomOf="@id/txtPromoDesc" />
+
+        <TextView
             android:id="@+id/txtPromoCreateDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
             android:hint="20/07/2020"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/txtPromoName"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/PromoCreDate"
+            app:layout_constraintTop_toBottomOf="@id/txtPromoDesc" />
+
+        <TextView
+            android:id="@+id/PromoExpDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="Expired :"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/txtPromoExpDate"
+            app:layout_constraintTop_toBottomOf="@id/PromoCreDate" />
 
         <TextView
             android:id="@+id/txtPromoExpDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="Expired : 21/07/2020"
-            android:textSize="16sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtPromoName" />
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="21/07/2020"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/PromoExpDate"
+            app:layout_constraintTop_toBottomOf="@id/txtPromoCreateDate" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

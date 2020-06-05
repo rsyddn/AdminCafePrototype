@@ -2,14 +2,13 @@
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorAccent">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         style="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:titleTextColor="@color/colorPrimary">
+        app:titleTextColor="@color/colorAccent">
 
     </com.google.android.material.appbar.MaterialToolbar>
 </com.google.android.material.appbar.AppBarLayout>

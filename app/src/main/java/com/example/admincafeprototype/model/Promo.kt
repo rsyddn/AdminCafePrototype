@@ -2,6 +2,7 @@ package com.example.admincafeprototype.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
+import java.time.LocalDate
 import java.util.*
 
 @Parcelize

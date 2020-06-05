@@ -21,9 +21,8 @@
         android:layout_marginTop="?actionBarSize"
         android:padding="16dp">
 
-
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tfPromoName"
+            android:id="@+id/tfPromoNameD"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,14 +33,15 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tEPromoName"
+                android:id="@+id/tEPromoNameD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:editable="false"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tfPromoCreDate"
+            android:id="@+id/tfPromoCreDateD"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,10 +50,10 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tfPromoName">
+            app:layout_constraintTop_toBottomOf="@id/tfPromoNameD">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tEPromoCreDate"
+                android:id="@+id/tEPromoCreDateD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
@@ -62,7 +62,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tfPromoExpDate"
+            android:id="@+id/tfPromoExpDateD"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,10 +71,10 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tfPromoCreDate">
+            app:layout_constraintTop_toBottomOf="@id/tfPromoCreDateD">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tEPromoExpDate"
+                android:id="@+id/tEPromoExpDateD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="false"
@@ -83,7 +83,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tfPromoCost"
+            android:id="@+id/tfPromoCostD"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,10 +92,10 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tfPromoExpDate">
+            app:layout_constraintTop_toBottomOf="@id/tfPromoExpDateD">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tEPromoCost"
+                android:id="@+id/tEPromoCostD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -103,7 +103,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tfPromoStock"
+            android:id="@+id/tfPromoStockD"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -112,10 +112,10 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tfPromoCost">
+            app:layout_constraintTop_toBottomOf="@id/tfPromoCostD">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tEPromoStock"
+                android:id="@+id/tEPromoStockD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -123,7 +123,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tfPromoDesc"
+            android:id="@+id/tfPromoDescD"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -132,24 +132,37 @@
             app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tfPromoStock">
+            app:layout_constraintTop_toBottomOf="@id/tfPromoStockD">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tEPromoDesc"
+                android:id="@+id/tEPromoDescD"
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonAddPromo"
+            android:id="@+id/buttonEditPromoD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Add Promo"
+            android:text="Edit Promo"
             android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tfPromoDesc" />
+            app:layout_constraintTop_toBottomOf="@id/tfPromoDescD" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonAddPromoD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Delete Promo"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:backgroundTint="#F40000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonEditPromoD" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

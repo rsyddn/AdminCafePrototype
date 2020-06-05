@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.admincafeprototype.R
 import com.example.admincafeprototype.model.Promo
 import kotlinx.android.synthetic.main.card_promotion_list.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
-class PromotionAdapter (
-    private val promoList: MutableList<Promo> = mutableListOf()
+class PromotionAdapter(
+    private val promoList: MutableList<Promo> = mutableListOf() ,
+    private val onClickListener: (Promo) -> Unit
 ) : RecyclerView.Adapter<PromotionAdapter.PromoViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -26,7 +29,7 @@ class PromotionAdapter (
     }
 
     override fun onBindViewHolder(holder: PromotionAdapter.PromoViewHolder, position: Int) {
-        val promo : Promo = promoList[position]
+        val promo: Promo = promoList[position]
         holder.bind(promo)
         addList(null)
     }
@@ -38,11 +41,27 @@ class PromotionAdapter (
         }
     }
 
-    inner class PromoViewHolder(private val view : View) :RecyclerView.ViewHolder(view){
-        fun bind(promotion: Promo){
+    inner class PromoViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+        fun bind(promotion: Promo) {
+            //Expired Date
+
+            val pattern = "dd/MM/yyyy"
+            val parserPattern = "EEE MMM dd HH:mm:ss zzz yyyy"
+            val toFormat = SimpleDateFormat(pattern, Locale.getDefault())
+            val parser = SimpleDateFormat(parserPattern, Locale.getDefault())
+
+            val expDate = parser.parse(promotion.promoExpDate.toString())
+            val szExDate: String = toFormat.format(expDate)
+            //Create Date
+            val creDate = parser.parse(promotion.promoCreateDate.toString())
+            val szCrDate: String = toFormat.format(creDate)
             view.txtPromoName.text = promotion.promoName
-            view.txtPromoCreateDate.text = promotion.promoCreateDate.toString()
-            view.txtPromoExpDate.text = promotion.promoExpDate.toString()
+            view.txtPromoDesc.text = promotion.promoDetail!!.take(100)
+            view.txtPromoCreateDate.text = szCrDate
+            view.txtPromoExpDate.text = szExDate
+            view.setOnClickListener{
+                onClickListener(promotion)
+            }
         }
     }
 }

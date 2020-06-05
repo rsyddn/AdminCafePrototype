@@ -2,9 +2,10 @@ package com.example.admincafeprototype.ui
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.admincafeprototype.R
-import com.example.admincafeprototype.util.CalendarHelper
+import com.example.admincafeprototype.model.Promo
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add_promo.*
 import kotlinx.android.synthetic.main.template_toolbar.*
@@ -22,81 +23,93 @@ class AddPromoActivity : AppCompatActivity() {
 
     private fun setup() {
         setSupportActionBar(toolbar)
-
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        var cal = Calendar.getInstance()
+        val cal = Calendar.getInstance()
 
-        val promoExpDate = SimpleDateFormat("dd/MM/yyyy").format(System.currentTimeMillis())
-        val promoCreDate = SimpleDateFormat("dd/MM/yyyy").format(System.currentTimeMillis())
-
-        val dateSetListener =
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                val myFormat = "dd/MM/yyyy" // mention the format you need
-                val sdf = SimpleDateFormat(myFormat, Locale.US)
-                tEPromoExpDate.setText(sdf.format(cal.time))
-            }
-
-        val dateSetListener2 =
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                cal.set(Calendar.YEAR, year)
-                cal.set(Calendar.MONTH, monthOfYear)
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                val myFormat = "dd/MM/yyyy" // mention the format you need
-                val sdf = SimpleDateFormat(myFormat, Locale.US)
-                tEPromoCreDate.setText(sdf.format(cal.time))
-            }
         tEPromoExpDate.setOnClickListener {
+            val PromoExpListener =
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    cal.set(Calendar.YEAR, year)
+                    cal.set(Calendar.MONTH, monthOfYear)
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    tEPromoExpDate.setText(dateFormat.format(cal.time))
+                }
 
             val dialog = DatePickerDialog(
-                this, dateSetListener,
+                this, PromoExpListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
             )
-
-            dialog.datePicker.minDate = CalendarHelper.getCurrentDateInMills()
-            dialog.datePicker.maxDate =
-                CalendarHelper.getCurrentDateInMills() * (1000 * 60 * 60 * 24 * 7)
             dialog.show()
         }
 
         tEPromoCreDate.setOnClickListener {
+            val PromoCreListener =
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    cal.set(Calendar.YEAR, year)
+                    cal.set(Calendar.MONTH, monthOfYear)
+                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                    tEPromoCreDate.setText(dateFormat.format(cal.time))
+                }
+
             val dialog = DatePickerDialog(
-                this, dateSetListener2,
+                this, PromoCreListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
                 cal.get(Calendar.DAY_OF_MONTH)
             )
-            dialog.datePicker.maxDate = CalendarHelper.getCurrentDateInMills()
             dialog.show()
         }
 
 
-        val promoName = tEPromoName.text.toString()
-        val promoCost = tEPromoCost.text.toString()
-        val promoStock = tEPromoStock.text.toString()
-        val promoDesc = tEPromoDesc.text.toString()
+
         buttonAddPromo.setOnClickListener {
-            println(promoExpDate)
-            addData(promoName, promoCost, promoStock, promoDesc, promoExpDate, promoCreDate)
+
+            val promoName = tEPromoName.text.toString()
+            val promoCost = tEPromoCost.text.toString()
+            val promoStock = tEPromoStock.text.toString()
+            val promoDesc = tEPromoDesc.text.toString()
+
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            //Expired Date
+            val expDate = tEPromoExpDate.text.toString()
+            val promoExpDate = dateFormat.parse(expDate)
+            //Create Date
+            val creDate = tEPromoCreDate.text.toString()
+            val promoCreDate = dateFormat.parse(creDate)
+
+            val promoId = firestore.collection("promos").document().id
+            val promoIsActive = true
+
+
+
+            val promo = Promo(
+                promoId,
+                promoName,
+                promoDesc,
+                promoStock.toInt(),
+                promoCost.toInt(),
+                promoCreDate,
+                promoExpDate,
+                promoIsActive
+            )
+
+            firestore.collection("promos").document(promoId)
+                .set(promo)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Data is Added", Toast.LENGTH_SHORT).show()
+                    tEPromoName.text!!.clear()
+                    tEPromoCost.text!!.clear()
+                    tEPromoStock.text!!.clear()
+                    tEPromoDesc.text!!.clear()
+                    tEPromoExpDate.text!!.clear()
+                    tEPromoCreDate.text!!.clear()
+                }
         }
-
-    }
-
-    private fun addData(
-        promoName: String,
-        promoCost: String,
-        promoStock: String,
-        promoDesc: String,
-        promoExpDate: String,
-        promoCreDate: String
-    ) {
     }
 }

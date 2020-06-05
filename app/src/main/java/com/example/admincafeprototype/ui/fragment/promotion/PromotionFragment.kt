@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.admincafeprototype.R
 import com.example.admincafeprototype.model.Promo
 import com.example.admincafeprototype.ui.AddPromoActivity
+import com.example.admincafeprototype.ui.DetailPromoActivity
 import com.example.admincafeprototype.ui.adapter.promotion.PromotionAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_promotion.*
@@ -38,13 +39,18 @@ class PromotionFragment : Fragment() {
 
     private fun add() {
         buttonPromotionAdd.setOnClickListener { view ->
-            val intent = Intent (getActivity(), AddPromoActivity::class.java)
+            val intent = Intent(getActivity(), AddPromoActivity::class.java)
             getActivity()?.startActivity(intent)
         }
     }
 
     private fun show() {
-        val pListAdapter = PromotionAdapter()
+        val pListAdapter = PromotionAdapter(
+            onClickListener = { promo ->
+                val intent = DetailPromoActivity.newIntent(requireContext())
+                intent.putExtra(DetailPromoActivity.PROMO_KEY, promo)
+            }
+        )
         recyclerPromotion.apply {
             adapter = pListAdapter
             layoutManager = LinearLayoutManager(this.context)

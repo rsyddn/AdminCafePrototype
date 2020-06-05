@@ -1,7 +1,6 @@
 package com.example.admincafeprototype.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.admincafeprototype.R
@@ -40,20 +39,16 @@ class HomeActivity : AppCompatActivity() {
             when (item.itemId) {
 
                 R.id.qrScanner -> {
-                    println("Hello fragment")
                     mCurrentFragment = ScanQrFragment()
                 }
                 R.id.promotions -> {
-
-                    println("Hello fragment")
                     mCurrentFragment = PromotionFragment()
                 }
                 R.id.settings -> {
-
-                    println("Hello fragment")
                     mCurrentFragment = SettingFragment()
                 }
             }
+
             supportFragmentManager.beginTransaction()
                 .replace(R.id.frameLayout, mCurrentFragment!!)
                 .commit()
