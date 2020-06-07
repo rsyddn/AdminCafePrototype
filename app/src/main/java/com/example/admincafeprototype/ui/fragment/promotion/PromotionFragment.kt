@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.admincafeprototype.R
@@ -49,6 +50,7 @@ class PromotionFragment : Fragment() {
             onClickListener = { promo ->
                 val intent = DetailPromoActivity.newIntent(requireContext())
                 intent.putExtra(DetailPromoActivity.PROMO_KEY, promo)
+                startActivity(intent)
             }
         )
         recyclerPromotion.apply {

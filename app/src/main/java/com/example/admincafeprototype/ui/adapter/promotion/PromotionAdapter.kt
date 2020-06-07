@@ -51,10 +51,10 @@ class PromotionAdapter(
             val parser = SimpleDateFormat(parserPattern, Locale.getDefault())
 
             val expDate = parser.parse(promotion.promoExpDate.toString())
-            val szExDate: String = toFormat.format(expDate)
+            val szExDate: String = toFormat.format(expDate!!)
             //Create Date
             val creDate = parser.parse(promotion.promoCreateDate.toString())
-            val szCrDate: String = toFormat.format(creDate)
+            val szCrDate: String = toFormat.format(creDate!!)
             view.txtPromoName.text = promotion.promoName
             view.txtPromoDesc.text = promotion.promoDetail!!.take(100)
             view.txtPromoCreateDate.text = szCrDate

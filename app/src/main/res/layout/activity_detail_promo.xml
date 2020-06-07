@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Promo Name"
-            app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -36,7 +35,6 @@
                 android:id="@+id/tEPromoNameD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:editable="false"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,7 +45,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Promo Created Date"
-            app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tfPromoNameD">
@@ -68,7 +65,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Promo Expired Date"
-            app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tfPromoCreDateD">
@@ -89,7 +85,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Promo Cost"
-            app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tfPromoExpDateD">
@@ -109,7 +104,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Promo Stock"
-            app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tfPromoCostD">
@@ -129,7 +123,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Promo Description"
-            app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tfPromoStockD">
@@ -137,7 +130,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/tEPromoDescD"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton

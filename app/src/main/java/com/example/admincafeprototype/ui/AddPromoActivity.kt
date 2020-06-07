@@ -86,8 +86,6 @@ class AddPromoActivity : AppCompatActivity() {
             val promoId = firestore.collection("promos").document().id
             val promoIsActive = true
 
-
-
             val promo = Promo(
                 promoId,
                 promoName,

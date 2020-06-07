@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpBottom(auth: String) {
         val bottomSheet = BottomSheetDialog(this)
-
         bottomSheet.apply {
             window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
             setContentView(R.layout.bottom_sheet_auth)
