@@ -60,7 +60,7 @@ class DetailPromoActivity : AppCompatActivity() {
         buttonEditPromoD.setOnClickListener {
             if(isEdited){
                 Toast.makeText(this, "Edit Data di firebase", Toast.LENGTH_SHORT).show()
-                editForm(szCrDate,szExDate)
+                editForm()
             }else{
                 isEdited = true
                 Toast.makeText(this, "Bisa di edit", Toast.LENGTH_SHORT).show()
@@ -79,26 +79,14 @@ class DetailPromoActivity : AppCompatActivity() {
         tEPromoDescD.isEnabled = value
     }
 
-    private fun editForm(creDate: String, expDate: String) {
-        val cal = Calendar.getInstance()
-
+    private fun editForm() {
+        Toast.makeText(this, "Edit Data di firebase", Toast.LENGTH_SHORT).show()
         tEPromoExpDateD.setOnClickListener {
-            val PromoExpListener =
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    cal.set(Calendar.YEAR, year)
-                    cal.set(Calendar.MONTH, monthOfYear)
-                    cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                    tEPromoExpDateD.setText(dateFormat.format(cal.time))
-                }
+            println("Masuk")
+        }
 
-            val dialog = DatePickerDialog(
-                this, PromoExpListener,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-            )
-            dialog.show()
+        tEPromoCreDateD.setOnClickListener {
+            Toast.makeText(this, "Button Clicked", Toast.LENGTH_SHORT).show()
         }
 
 
