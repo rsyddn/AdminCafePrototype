@@ -4,26 +4,26 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.admincafeprototype.R
 import com.example.admincafeprototype.model.Promo
-import com.google.android.material.textfield.TextInputEditText
-import kotlinx.android.synthetic.main.activity_add_promo.*
 import kotlinx.android.synthetic.main.activity_detail_promo.*
 import kotlinx.android.synthetic.main.template_toolbar.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class DetailPromoActivity : AppCompatActivity() {
-    private lateinit var promo : Promo
+    private lateinit var promo: Promo
     private var isEdited = false
+
+    private val pattern = "dd/MM/yyyy"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_promo)
         setup()
+        isEditableForm()
     }
 
     private fun setup() {
@@ -31,13 +31,11 @@ class DetailPromoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if(intent.hasExtra(PROMO_KEY)){
+        if (intent.hasExtra(PROMO_KEY)) {
             promo = intent.getParcelableExtra(PROMO_KEY) as Promo
-        }else{
+        } else {
             finish()
         }
-
-        val pattern = "dd/MM/yyyy"
         val parserPattern = "EEE MMM dd HH:mm:ss zzz yyyy"
         val toFormat = SimpleDateFormat(pattern, Locale.getDefault())
         val parser = SimpleDateFormat(parserPattern, Locale.getDefault())
@@ -58,19 +56,56 @@ class DetailPromoActivity : AppCompatActivity() {
         textEditProperties(isEdited)
 
         buttonEditPromoD.setOnClickListener {
-            if(isEdited){
-                Toast.makeText(this, "Edit Data di firebase", Toast.LENGTH_SHORT).show()
-                editForm()
-            }else{
-                isEdited = true
-                Toast.makeText(this, "Bisa di edit", Toast.LENGTH_SHORT).show()
-                textEditProperties(isEdited)
-            }
+            isEdited = !isEdited
+            Toast.makeText(this, "Edit : $isEdited", Toast.LENGTH_SHORT).show()
+            textEditProperties(isEdited)
         }
 
     }
 
-    private fun textEditProperties(value : Boolean){
+    private fun isEditableForm() {
+            val cal = Calendar.getInstance()
+            tEPromoCreDateD.setOnClickListener {
+                Toast.makeText(this, "LOL Create", Toast.LENGTH_LONG).show()
+                val promoExpListener =
+                    DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                        cal.set(Calendar.YEAR, year)
+                        cal.set(Calendar.MONTH, monthOfYear)
+                        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                        val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+                        tEPromoCreDateD.setText(dateFormat.format(cal.time))
+                    }
+
+                val dialog = DatePickerDialog(
+                    this, promoExpListener,
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)
+                )
+                dialog.show()
+            }
+            tEPromoExpDateD.setOnClickListener {
+                Toast.makeText(this, "LOL Exp", Toast.LENGTH_LONG).show()
+                val promoExpListener =
+                    DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+                        cal.set(Calendar.YEAR, year)
+                        cal.set(Calendar.MONTH, monthOfYear)
+                        cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                        val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+                        tEPromoExpDateD.setText(dateFormat.format(cal.time))
+                    }
+
+                val dialog = DatePickerDialog(
+                    this, promoExpListener,
+                    cal.get(Calendar.YEAR),
+                    cal.get(Calendar.MONTH),
+                    cal.get(Calendar.DAY_OF_MONTH)
+                )
+                dialog.show()
+            }
+    }
+
+    private fun textEditProperties(value: Boolean) {
         tEPromoNameD.isEnabled = value
         tEPromoCreDateD.isEnabled = value
         tEPromoExpDateD.isEnabled = value
@@ -79,28 +114,11 @@ class DetailPromoActivity : AppCompatActivity() {
         tEPromoDescD.isEnabled = value
     }
 
-    private fun editForm() {
-        Toast.makeText(this, "Edit Data di firebase", Toast.LENGTH_SHORT).show()
-        tEPromoExpDateD.setOnClickListener {
-            println("Masuk")
-        }
-
-        tEPromoCreDateD.setOnClickListener {
-            Toast.makeText(this, "Button Clicked", Toast.LENGTH_SHORT).show()
-        }
-
-
-        val promoName = tEPromoNameD.text.toString()
-        val promoCost = tEPromoCostD.text.toString()
-        val promoStock = tEPromoStockD.text.toString()
-        val promoDesc = tEPromoDescD.text.toString()
-        Toast.makeText(this, "$promoName, $promoCost, $promoStock, $promoDesc", Toast.LENGTH_SHORT).show()
-    }
-
     companion object {
         fun newIntent(context: Context): Intent {
             return Intent(context, DetailPromoActivity::class.java)
         }
+
         const val PROMO_KEY = "PROMO_KEY"
     }
 }
