@@ -147,7 +147,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tfPromoDescD" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonAddPromoD"
+                android:id="@+id/buttonDeletePromoD"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
