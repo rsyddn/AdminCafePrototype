@@ -8,15 +8,25 @@
     tools:context=".ui.MainActivity">
 
     <TextView
-        android:id="@+id/tv_Title"
+        android:id="@+id/AdminText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/title_start_activity"
-        android:text="My Cafe Admin"
+        android:text="Admin"
         android:textSize="@dimen/title_app_name"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/tv_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_padding_margin"
+        android:text="Kedai U.K.M"
+        android:textSize="@dimen/title_app_name"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/AdminText"
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_register"

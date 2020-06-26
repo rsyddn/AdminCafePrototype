@@ -74,7 +74,14 @@ class HomeActivity : AppCompatActivity() {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                addClaimed(result.contents)
+                firestore.collection("purchased").document(result.contents).get()
+                    .addOnSuccessListener { document ->
+                        if(document?.get("purchasedId") == result.contents){
+                            addClaimed(result.contents)
+                        }else{
+                            Toast.makeText(this, "Wrong QR Code!!", Toast.LENGTH_LONG).show();
+                        }
+                    }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

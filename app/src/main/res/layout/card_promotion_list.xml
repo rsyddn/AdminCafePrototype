@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cardSchedule"
+    android:id="@+id/cardPromotion"
     style="@style/Widget.MaterialComponents.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,7 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Promo Name"
-            android:textSize="24dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,8 +30,8 @@
             android:id="@+id/txtPromoDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="@dimen/quarter_padding_margin"
+            android:layout_marginTop="@dimen/half_padding_margin"
             android:hint="Lorem Ipsum"
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"

@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="30dp"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:backgroundTint="#FF5722"
             app:icon="@drawable/ic_action_add"
             app:iconTint="@color/text_color"
             app:layout_constraintBottom_toBottomOf="parent"
