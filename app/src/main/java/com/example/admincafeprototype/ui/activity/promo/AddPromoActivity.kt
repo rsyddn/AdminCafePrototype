@@ -1,4 +1,4 @@
-package com.example.admincafeprototype.ui
+package com.example.admincafeprototype.ui.activity.promo
 
 import android.app.DatePickerDialog
 import android.os.Bundle

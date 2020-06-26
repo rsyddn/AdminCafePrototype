@@ -1,17 +1,17 @@
 package com.example.admincafeprototype.ui.fragment.promotion
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.admincafeprototype.R
 import com.example.admincafeprototype.model.Promo
-import com.example.admincafeprototype.ui.AddPromoActivity
-import com.example.admincafeprototype.ui.DetailPromoActivity
+import com.example.admincafeprototype.ui.activity.promo.AddPromoActivity
+import com.example.admincafeprototype.ui.activity.promo.DetailPromoActivity
 import com.example.admincafeprototype.ui.adapter.promotion.PromotionAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_promotion.*
@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_promotion.*
 class PromotionFragment : Fragment() {
     private val firestore = FirebaseFirestore.getInstance()
     val list = mutableListOf<Promo>()
+    private lateinit var pListAdapter : PromotionAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +39,16 @@ class PromotionFragment : Fragment() {
         add()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == 1){
+            if (resultCode == Activity.RESULT_OK){
+                //refresh
+//                refresh()
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     private fun add() {
         buttonPromotionAdd.setOnClickListener { view ->
             val intent = Intent(getActivity(), AddPromoActivity::class.java)
@@ -46,17 +57,21 @@ class PromotionFragment : Fragment() {
     }
 
     private fun show() {
-        val pListAdapter = PromotionAdapter(
+        pListAdapter = PromotionAdapter(
             onClickListener = { promo ->
                 val intent = DetailPromoActivity.newIntent(requireContext())
                 intent.putExtra(DetailPromoActivity.PROMO_KEY, promo)
-                startActivity(intent)
+                startActivityForResult(intent, 1)
             }
         )
         recyclerPromotion.apply {
             adapter = pListAdapter
             layoutManager = LinearLayoutManager(this.context)
         }
+        refresh()
+    }
+
+    private fun refresh(){
         firestore.collection("promos")
             .get().addOnSuccessListener { documents ->
                 documents.forEach() {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.HomeActivity">
+    tools:context=".ui.activity.home.HomeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -24,10 +24,29 @@
 
     </FrameLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.example.admincafeprototype.ui.custombottomnav.FabBottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        app:fab_cradle_margin="8dp"
+        app:fab_cradle_rounded_corner_radius="8dp"
+        app:fab_size="50dp"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
         app:menu="@menu/bottom_nav" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/qrScanButton"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:backgroundTint="@color/fab_color"
+        android:clickable="true"
+        android:focusable="true"
+        app:elevation="16dp"
+        app:icon="@drawable/ic_qr_code_scan"
+        app:iconTint="@color/text_color"
+        app:layout_anchor="@id/bottomNavigationView"
+        app:layout_anchorGravity="fill_vertical|center_horizontal" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

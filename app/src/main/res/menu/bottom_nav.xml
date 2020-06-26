@@ -1,19 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/qrScanner"
-        android:title="Scan QR"
-        android:icon="@drawable/ic_action_scan" />
-    <item
         android:id="@+id/transaction"
         android:title="Transaction"
         android:icon="@drawable/ic_action_transaction" />
     <item
+        android:enabled="false"
+        android:title="@null" />
+    <item
         android:id="@+id/promotions"
         android:title="Promotions"
         android:icon="@drawable/ic_action_promotions" />
-    <item
-        android:id="@+id/settings"
-        android:title="Settings"
-        android:icon="@drawable/ic_action_settings" />
 </menu>

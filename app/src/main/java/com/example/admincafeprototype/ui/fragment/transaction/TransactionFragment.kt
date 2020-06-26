@@ -1,4 +1,4 @@
-package com.example.admincafeprototype.ui.fragment.qr
+package com.example.admincafeprototype.ui.fragment.transaction
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.admincafeprototype.R
 
-
-class ScanQrFragment : Fragment() {
+class TransactionFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_scan_qr, container, false)
+        return inflater.inflate(R.layout.fragment_transaction, container, false)
     }
 }

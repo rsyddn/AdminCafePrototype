@@ -31,14 +31,15 @@ class PromotionAdapter(
     override fun onBindViewHolder(holder: PromotionAdapter.PromoViewHolder, position: Int) {
         val promo: Promo = promoList[position]
         holder.bind(promo)
-        addList(null)
     }
 
     fun addList(list: List<Promo>?) {
+        promoList.clear()
         list?.let { promo ->
+
             promoList.addAll(promo)
-            notifyDataSetChanged()
         }
+        notifyDataSetChanged()
     }
 
     inner class PromoViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {

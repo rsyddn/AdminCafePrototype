@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.DetailPromoActivity">
+    tools:context=".ui.activity.promo.DetailPromoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -25,139 +25,142 @@
             android:layout_marginTop="?actionBarSize"
             android:padding="16dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfPromoNameD"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/PromoNameD"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Promo Name"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:text="Promo Name"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tEPromoNameD"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfPromoCreDateD"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Promo Created Date"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tfPromoNameD">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tEPromoCreDateD"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="false"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfPromoExpDateD"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Promo Expired Date"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tfPromoCreDateD">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tEPromoExpDateD"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="false" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfPromoCostD"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Promo Cost"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tfPromoExpDateD">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tEPromoCostD"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:singleLine="true" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfPromoStockD"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Promo Stock"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tfPromoCostD">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tEPromoStockD"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:singleLine="true" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfPromoDescD"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:hint="Promo Description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tfPromoStockD">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tEPromoDescD"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonEditPromoD"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="Edit Promo"
-                android:textAllCaps="false"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tfPromoDescD" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/buttonDeletePromoD"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txtPromoNameD"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Delete Promo"
-                android:textAllCaps="false"
-                android:visibility="gone"
-                app:backgroundTint="#F40000"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/buttonEditPromoD" />
+                android:text="Promo Name"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/PromoNameD" />
+
+            <TextView
+                android:id="@+id/PromoCreDateD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Promo Created Date"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtPromoNameD" />
+
+            <TextView
+                android:id="@+id/txtPromoCreDateD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Promo Created Date"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/PromoCreDateD" />
+
+            <TextView
+                android:id="@+id/PromoExpDateD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Promo Created Date"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtPromoCreDateD" />
+
+            <TextView
+                android:id="@+id/txtPromoExpDateD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Promo Created Date"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/PromoExpDateD" />
+
+            <TextView
+                android:id="@+id/PromoStockD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Promo Cost"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtPromoExpDateD" />
+
+            <TextView
+                android:id="@+id/txtPromoStockD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Promo Stock"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/PromoStockD" />
+
+            <TextView
+                android:id="@+id/PromoCostD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Promo Cost"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtPromoStockD" />
+
+            <TextView
+                android:id="@+id/txtPromoCostD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Promo Cost"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/PromoCostD" />
+
+            <TextView
+                android:id="@+id/PromoDescD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Promo Desc"
+                android:layout_marginTop="8dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtPromoCostD" />
+
+            <TextView
+                android:id="@+id/txtPromoDescD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Promo Desc"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/PromoDescD" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

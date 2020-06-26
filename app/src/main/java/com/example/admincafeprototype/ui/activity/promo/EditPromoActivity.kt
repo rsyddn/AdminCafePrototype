@@ -1,97 +1,131 @@
-package com.example.admincafeprototype.ui
+package com.example.admincafeprototype.ui.activity.promo
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.admincafeprototype.R
 import com.example.admincafeprototype.model.Promo
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_add_promo.*
-import kotlinx.android.synthetic.main.activity_detail_promo.*
+import kotlinx.android.synthetic.main.activity_edit_promo.*
 import kotlinx.android.synthetic.main.template_toolbar.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DetailPromoActivity : AppCompatActivity() {
+class EditPromoActivity : AppCompatActivity() {
     private lateinit var promo: Promo
-    private var isEdited = false
     private val firestore = FirebaseFirestore.getInstance()
     private val pattern = "dd/MM/yyyy"
     private val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_promo)
-        setup()
-        isEditableForm()
+        setContentView(R.layout.activity_edit_promo)
+        if (intent.hasExtra(PROMO_KEY)) {
+            promo = intent.getParcelableExtra(PROMO_KEY) as Promo
+        }
+        setUp()
     }
 
-    private fun setup() {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_save, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            R.id.menu_save -> {
+
+                isEditableForm()
+                true
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
+    private fun setUp() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        if (intent.hasExtra(PROMO_KEY)) {
-            promo = intent.getParcelableExtra(PROMO_KEY) as Promo
-        } else {
-            finish()
-        }
         val parserPattern = "EEE MMM dd HH:mm:ss zzz yyyy"
         val parser = SimpleDateFormat(parserPattern, Locale.getDefault())
         val expDate = parser.parse(promo.promoExpDate.toString())
-        val szExDate: String = dateFormat.format(expDate!!)
+        val szExDate = expDate?.let {
+            dateFormat.format(it)
+        } ?: ""
+
         //Create Date
         val creDate = parser.parse(promo.promoCreateDate.toString())
-        val szCrDate: String = dateFormat.format(creDate!!)
 
-        tEPromoNameD.setText(promo.promoName)
-        tEPromoCreDateD.setText(szCrDate)
-        tEPromoExpDateD.setText(szExDate)
-        tEPromoCostD.setText(promo.promoCost.toString())
-        tEPromoStockD.setText(promo.promoStock.toString())
-        tEPromoDescD.setText(promo.promoDetail)
+        val szCrDate = creDate?.let {
+            dateFormat.format(it)
+        } ?: ""
 
-        textEditProperties(isEdited)
+        tEPromoNameE.setText(promo.promoName)
+        tEPromoCreDateE.setText(szCrDate)
+        tEPromoExpDateE.setText(szExDate)
+        tEPromoCostE.setText(promo.promoCost.toString())
+        tEPromoStockE.setText(promo.promoStock.toString())
+        tEPromoDescE.setText(promo.promoDetail)
 
-        buttonEditPromoD.setOnClickListener {
-            isEdited = !isEdited
-            Toast.makeText(this, "Edit : $isEdited", Toast.LENGTH_SHORT).show()
-            textEditProperties(isEdited)
-            buttonDeletePromoD.visibility = View.VISIBLE
-        }
-
-        buttonDeletePromoD.setOnClickListener {
-            firestore.collection("promos").document(promo.promoId!!)
-                .delete()
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Data is Deleted", Toast.LENGTH_SHORT).show()
+        buttonDeletePromoE.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.apply {
+                setMessage("Are you sure to delete?")
+                setPositiveButton("Yes") { dialog, id ->
+                    firestore.collection("promos").document(promo.promoId!!)
+                        .delete()
+                        .addOnSuccessListener {
+                            Toast.makeText(this@EditPromoActivity, "Data is Deleted", Toast.LENGTH_SHORT).show()
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this@EditPromoActivity, "Data is Failed to deleted", Toast.LENGTH_SHORT).show()
+                        }
                 }
-                .addOnFailureListener{
-                    Toast.makeText(this, "Data is Failed to deleted", Toast.LENGTH_SHORT).show()
-                }
+                    .setNegativeButton("No") { dialog, id ->
+                        // Dismiss the dialog
+                        dialog.dismiss()
+                    }
+            }
+
+            val alert = builder.create()
+            alert.show()
+
         }
 
     }
 
+
     private fun isEditableForm() {
-        val promoNameD = tEPromoNameD.text.toString()
-        val promoCostD = tEPromoCostD.text.toString()
-        val promoStockD = tEPromoStockD.text.toString()
-        val promoDescD = tEPromoDescD.text.toString()
+        val promoNameD = tEPromoNameE.text.toString()
+        val promoCostD = tEPromoCostE.text.toString()
+        val promoStockD = tEPromoStockE.text.toString()
+        val promoDescD = tEPromoDescE.text.toString()
 
         val cal = Calendar.getInstance()
-        tEPromoCreDateD.setOnClickListener {
+        tEPromoCreDateE.setOnClickListener {
             val promoExpListener =
                 DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     cal.set(Calendar.YEAR, year)
                     cal.set(Calendar.MONTH, monthOfYear)
                     cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
-                    tEPromoCreDateD.setText(dateFormat.format(cal.time))
+                    tEPromoCreDateE.setText(dateFormat.format(cal.time))
                 }
 
             val dialog = DatePickerDialog(
@@ -102,14 +136,14 @@ class DetailPromoActivity : AppCompatActivity() {
             )
             dialog.show()
         }
-        tEPromoExpDateD.setOnClickListener {
+        tEPromoExpDateE.setOnClickListener {
             val promoExpListener =
                 DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     cal.set(Calendar.YEAR, year)
                     cal.set(Calendar.MONTH, monthOfYear)
                     cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                     val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
-                    tEPromoExpDateD.setText(dateFormat.format(cal.time))
+                    tEPromoExpDateE.setText(dateFormat.format(cal.time))
                 }
 
             val dialog = DatePickerDialog(
@@ -121,10 +155,10 @@ class DetailPromoActivity : AppCompatActivity() {
             dialog.show()
         }
         //Expired Date
-        val expDate = tEPromoExpDateD.text.toString()
+        val expDate = tEPromoExpDateE.text.toString()
         val promoExpDateD = dateFormat.parse(expDate)
         //Create Date
-        val creDate = tEPromoCreDateD.text.toString()
+        val creDate = tEPromoCreDateE.text.toString()
         val promoCreDateD = dateFormat.parse(creDate)
         val promoIdD = promo.promoId
         val promoIsActiveD = true
@@ -145,22 +179,20 @@ class DetailPromoActivity : AppCompatActivity() {
             .update(update)
             .addOnSuccessListener {
                 Toast.makeText(this, "Data is Edited", Toast.LENGTH_SHORT).show()
+                setResult(Activity.RESULT_OK)
+                finish()
             }
-    }
 
-    private fun textEditProperties(value: Boolean) {
-        tEPromoNameD.isEnabled = value
-        tEPromoCreDateD.isEnabled = value
-        tEPromoExpDateD.isEnabled = value
-        tEPromoCostD.isEnabled = value
-        tEPromoStockD.isEnabled = value
-        tEPromoDescD.isEnabled = value
     }
 
     companion object {
-        fun newIntent(context: Context): Intent {
-            return Intent(context, DetailPromoActivity::class.java)
+        fun newIntent(context: Context, p: Promo): Intent {
+            return Intent(context, EditPromoActivity::class.java).apply {
+                putExtra(PROMO_KEY, p)
+            }
+
         }
+
         const val PROMO_KEY = "PROMO_KEY"
     }
 }
