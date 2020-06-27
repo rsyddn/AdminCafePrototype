@@ -4,9 +4,10 @@
     package="com.example.admincafeprototype">
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,12 +15,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.promo.EditPromoActivity"></activity>
+        <activity android:name=".ui.activity.scanqr.ScanQrActivity"></activity>
+        <activity android:name=".ui.activity.promo.EditPromoActivity" />
         <activity android:name=".ui.activity.promo.DetailPromoActivity" />
         <activity android:name=".ui.activity.promo.AddPromoActivity" />
         <activity android:name=".ui.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

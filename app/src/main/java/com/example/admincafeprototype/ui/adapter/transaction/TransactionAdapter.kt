@@ -45,7 +45,7 @@ class TransactionAdapter(
 
     inner class TransactionViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fun bind(claimed: Claimed) {
-            val pattern = "dd-MM-yyyy HH:mm:ss.SSS"
+            val pattern = " dd-MM-yyyy HH:mm:ss"
             val parserPattern = "EEE MMM dd HH:mm:ss zzz yyyy"
             val toFormat = SimpleDateFormat(pattern, Locale.getDefault())
             val parser = SimpleDateFormat(parserPattern, Locale.getDefault())
