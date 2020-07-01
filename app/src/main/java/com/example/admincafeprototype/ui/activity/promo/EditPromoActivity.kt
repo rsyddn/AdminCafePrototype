@@ -87,7 +87,7 @@ class EditPromoActivity : AppCompatActivity() {
                 setMessage("Are you sure to delete?")
                 setPositiveButton("Yes") { dialog, id ->
                     firestore.collection("promos").document(promo.promoId!!)
-                        .delete()
+                        .update("promoIsActive",false)
                         .addOnSuccessListener {
                             Toast.makeText(this@EditPromoActivity, "Data is Deleted", Toast.LENGTH_SHORT).show()
                             setResult(Activity.RESULT_OK)

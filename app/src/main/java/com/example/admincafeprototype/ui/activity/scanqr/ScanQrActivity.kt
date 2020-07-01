@@ -1,61 +1,73 @@
 package com.example.admincafeprototype.ui.activity.scanqr
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.admincafeprototype.R
 import com.example.admincafeprototype.model.Claimed
-import com.example.admincafeprototype.ui.activity.home.HomeActivity
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.Result
+import kotlinx.android.synthetic.main.activity_scan_qr.*
+import me.dm7.barcodescanner.zxing.ZXingScannerView
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class ScanQrActivity : AppCompatActivity() {
+class ScanQrActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     private val firestore = FirebaseFirestore.getInstance()
     private val pattern = "yyyy-MM-dd HH:mm:ss"
     private val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
+
+    private lateinit var mScannerView: ZXingScannerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_qr)
-        IntentIntegrator(this)
-            .setOrientationLocked(false)
-            .setBeepEnabled(false)
-            .initiateScan()
+        initScannerView()
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val result = IntentIntegrator.parseActivityResult(resultCode, data)
-        if (result != null) {
-            if(result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show()
-                val moveIntent = Intent(this@ScanQrActivity, HomeActivity::class.java)
-                startActivity(moveIntent)
-            } else {
-                firestore.collection("purchased").document(result.contents).get()
-                    .addOnSuccessListener { document ->
-                        if(document?.get("purchasedId") == result.contents){
-                            if(document?.get("isClaimed") != true){
-                                addClaimed(result.contents)
-                            }else{
-                                Toast.makeText(this, "QR Code Already Used!!", Toast.LENGTH_LONG).show()
-                                val moveIntent = Intent(this@ScanQrActivity, HomeActivity::class.java)
-                                startActivity(moveIntent)
-                            }
-                        }else{
-                            Toast.makeText(this, "Wrong QR Code!!", Toast.LENGTH_LONG).show()
-                            val moveIntent = Intent(this@ScanQrActivity, HomeActivity::class.java)
-                            startActivity(moveIntent)
 
+    private fun initScannerView() {
+        mScannerView = ZXingScannerView(this)
+        mScannerView.setAutoFocus(true)
+        mScannerView.setResultHandler(this)
+        frame_layout_camera.addView(mScannerView)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mScannerView.startCamera()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mScannerView.stopCamera()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mScannerView.setResultHandler(this) // Register ourselves as a handler for scan results.
+        mScannerView.startCamera()
+    }
+
+    override fun handleResult(rawResult: Result?) {
+        if(rawResult != null){
+            firestore.collection("purchased").document(rawResult.toString()).get()
+                .addOnSuccessListener { document ->
+                    if(document?.get("purchasedId") == rawResult.toString()){
+                        if(document?.get("isClaimed") != true){
+                            addClaimed(rawResult.toString())
+                        }else{
+                            Toast.makeText(this, "QR Code Already Used!!", Toast.LENGTH_LONG).show()
+                            finish()
                         }
+                    }else{
+                        Toast.makeText(this, "Wrong QR Code!!", Toast.LENGTH_LONG).show()
+                        finish()
                     }
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-            val moveIntent = Intent(this@ScanQrActivity, HomeActivity::class.java)
-            startActivity(moveIntent)
+                }
+        }else{
+            finish()
         }
     }
 
@@ -85,10 +97,8 @@ class ScanQrActivity : AppCompatActivity() {
                             "Transaction is Successed!",
                             Toast.LENGTH_LONG
                         ).show()
-                        val moveIntent = Intent(this@ScanQrActivity, HomeActivity::class.java)
-                        startActivity(moveIntent)
+                        finish()
                     }
             }
-
     }
 }

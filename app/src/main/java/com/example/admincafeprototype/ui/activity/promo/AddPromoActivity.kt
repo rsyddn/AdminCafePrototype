@@ -2,6 +2,7 @@ package com.example.admincafeprototype.ui.activity.promo
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.admincafeprototype.R
@@ -19,6 +20,16 @@ class AddPromoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_promo)
         setup()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setup() {
@@ -101,12 +112,7 @@ class AddPromoActivity : AppCompatActivity() {
                 .set(promo)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Data is Added", Toast.LENGTH_SHORT).show()
-                    tEPromoName.text!!.clear()
-                    tEPromoCost.text!!.clear()
-                    tEPromoStock.text!!.clear()
-                    tEPromoDesc.text!!.clear()
-                    tEPromoExpDate.text!!.clear()
-                    tEPromoCreDate.text!!.clear()
+                    finish()
                 }
         }
     }

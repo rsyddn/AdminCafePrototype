@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.admincafeprototype.R
@@ -37,17 +38,25 @@ class PromotionFragment : Fragment() {
     fun setup() {
         show()
         add()
+//        refreshSwipe()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == 1){
-            if (resultCode == Activity.RESULT_OK){
-                //refresh
-//                refresh()
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
+//    private fun refreshSwipe() {
+//        swipeRefresh.setOnRefreshListener {
+//            refresh()
+//            Toast.makeText(this.context, "Refreshed", Toast.LENGTH_SHORT).show()
+//            swipeRefresh.isRefreshing = false
+//        }
+//    }
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        if(requestCode == 1){
+//            if (resultCode == Activity.RESULT_OK){
+//                show()
+//            }
+//        }
+//        super.onActivityResult(requestCode, resultCode, data)
+//    }
 
     private fun add() {
         buttonPromotionAdd.setOnClickListener { view ->
@@ -72,7 +81,7 @@ class PromotionFragment : Fragment() {
     }
 
     private fun refresh(){
-        firestore.collection("promos")
+        firestore.collection("promos").whereEqualTo("promoIsActive",true)
             .get().addOnSuccessListener { documents ->
                 documents.forEach() {
                     list.add(it.toObject(Promo::class.java))

@@ -13,7 +13,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class TransactionAdapter(
-    private val claimedList: MutableList<Claimed> = mutableListOf()
+    private val claimedList: MutableList<Claimed> = mutableListOf(),
+    private val onClickListener: (Claimed) -> Unit
 ) : RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder>() {
 
     fun addList(list: List<Claimed>?) {
@@ -56,6 +57,9 @@ class TransactionAdapter(
             } ?: ""
             view.txtTransactionId.text = claimed.claimedId
             view.txtClaimedDate.text = szClaimedDate
+            view.setOnClickListener{
+                onClickListener(claimed)
+            }
         }
 
     }

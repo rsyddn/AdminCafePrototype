@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.admincafeprototype.R
 import com.example.admincafeprototype.model.Claimed
 import com.example.admincafeprototype.model.Promo
+import com.example.admincafeprototype.ui.activity.promo.DetailPromoActivity
+import com.example.admincafeprototype.ui.activity.transaction.DetailTransactionActivity
 import com.example.admincafeprototype.ui.adapter.promotion.PromotionAdapter
 import com.example.admincafeprototype.ui.adapter.transaction.TransactionAdapter
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,7 +36,13 @@ class TransactionFragment : Fragment() {
     }
 
     private fun setUp() {
-        tListAdapter = TransactionAdapter()
+        tListAdapter = TransactionAdapter(
+            onClickListener = { claimed ->
+                val intent = DetailTransactionActivity.newIntent(requireContext())
+                intent.putExtra(DetailTransactionActivity.CLAIMED_KEY, claimed)
+                startActivityForResult(intent, 1)
+            }
+        )
         recyclerTransaction.apply {
             adapter = tListAdapter
             layoutManager = LinearLayoutManager(this.context)
