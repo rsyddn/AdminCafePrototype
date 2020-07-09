@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.scanqr.ScanQrActivity">
 
-    <FrameLayout
-        android:id="@+id/frame_layout_camera"
+    <me.dm7.barcodescanner.zxing.ZXingScannerView
+        android:id="@+id/mScannerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

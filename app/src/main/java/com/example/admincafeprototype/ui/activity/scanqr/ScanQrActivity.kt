@@ -1,12 +1,19 @@
 package com.example.admincafeprototype.ui.activity.scanqr
 
-import androidx.appcompat.app.AppCompatActivity
+import android.Manifest
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.admincafeprototype.R
 import com.example.admincafeprototype.model.Claimed
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.zxing.Result
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.activity_scan_qr.*
 import me.dm7.barcodescanner.zxing.ZXingScannerView
 import java.text.SimpleDateFormat
@@ -19,24 +26,31 @@ class ScanQrActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     private val pattern = "yyyy-MM-dd HH:mm:ss"
     private val dateFormat = SimpleDateFormat(pattern, Locale.getDefault())
 
-    private lateinit var mScannerView: ZXingScannerView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_qr)
-        initScannerView()
-    }
+        Dexter.withActivity(this)
+            .withPermission(Manifest.permission.CAMERA)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
+                    mScannerView.setResultHandler(this@ScanQrActivity)
+                    mScannerView.startCamera()
+                }
 
-    private fun initScannerView() {
-        mScannerView = ZXingScannerView(this)
-        mScannerView.setAutoFocus(true)
-        mScannerView.setResultHandler(this)
-        frame_layout_camera.addView(mScannerView)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mScannerView.startCamera()
+                override fun onPermissionRationaleShouldBeShown(
+                    p0: PermissionRequest?,
+                    p1: PermissionToken?
+                ) {
+                }
+                override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+                    Toast.makeText(
+                        this@ScanQrActivity,
+                        "You should enable this permission",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    finish()
+                }
+            }).check()
     }
 
     override fun onPause() {
@@ -51,22 +65,22 @@ class ScanQrActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
     }
 
     override fun handleResult(rawResult: Result?) {
-        if(rawResult != null){
+        if (rawResult != null) {
             firestore.collection("purchased").document(rawResult.toString()).get()
                 .addOnSuccessListener { document ->
-                    if(document?.get("purchasedId") == rawResult.toString()){
-                        if(document?.get("isClaimed") != true){
+                    if (document?.get("purchasedId") == rawResult.toString()) {
+                        if (document?.get("isClaimed") != true) {
                             addClaimed(rawResult.toString())
-                        }else{
+                        } else {
                             Toast.makeText(this, "QR Code Already Used!!", Toast.LENGTH_LONG).show()
                             finish()
                         }
-                    }else{
+                    } else {
                         Toast.makeText(this, "Wrong QR Code!!", Toast.LENGTH_LONG).show()
                         finish()
                     }
                 }
-        }else{
+        } else {
             finish()
         }
     }

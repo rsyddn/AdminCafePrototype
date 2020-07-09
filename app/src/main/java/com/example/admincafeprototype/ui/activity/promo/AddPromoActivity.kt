@@ -60,7 +60,7 @@ class AddPromoActivity : AppCompatActivity() {
 
         tEPromoCreDate.setOnClickListener {
             val PromoCreListener =
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     cal.set(Calendar.YEAR, year)
                     cal.set(Calendar.MONTH, monthOfYear)
                     cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -76,8 +76,6 @@ class AddPromoActivity : AppCompatActivity() {
             )
             dialog.show()
         }
-
-
 
         buttonAddPromo.setOnClickListener {
 
