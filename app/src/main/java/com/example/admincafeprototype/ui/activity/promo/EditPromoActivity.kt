@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.admincafeprototype.R
 import com.example.admincafeprototype.model.Promo
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_add_promo.*
 import kotlinx.android.synthetic.main.activity_edit_promo.*
 import kotlinx.android.synthetic.main.template_toolbar.*
 import java.text.SimpleDateFormat
@@ -45,10 +46,7 @@ class EditPromoActivity : AppCompatActivity() {
                 true
             }
             R.id.menu_save -> {
-
                 isEditableForm()
-                true
-
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -160,31 +158,50 @@ class EditPromoActivity : AppCompatActivity() {
         //Create Date
         val creDate = tEPromoCreDateE.text.toString()
         val promoCreDateD = dateFormat.parse(creDate)
-        val promoIdD = promo.promoId
         val promoIsActiveD = true
+        if (IsInputValid()){
+            val update =
+                mapOf(
+                    "promoId" to promo.promoId,
+                    "promoName" to promoNameD,
+                    "promoCreateDate" to promoCreDateD,
+                    "promoExpDate" to promoExpDateD,
+                    "promoCost" to promoCostD.toInt(),
+                    "promoStock" to promoStockD.toInt(),
+                    "promoDetail" to promoDescD,
+                    "promoIsActive" to promoIsActiveD
+                )
 
-        val update =
-            mapOf(
-                "promoId" to promo.promoId,
-                "promoName" to promoNameD,
-                "promoCreateDate" to promoCreDateD,
-                "promoExpDate" to promoExpDateD,
-                "promoCost" to promoCostD.toInt(),
-                "promoStock" to promoStockD.toInt(),
-                "promoDetail" to promoDescD,
-                "promoIsActive" to promoIsActiveD
-            )
-
-        firestore.collection("promos").document(promo.promoId!!)
-            .update(update)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Data is Edited", Toast.LENGTH_SHORT).show()
-                setResult(Activity.RESULT_OK)
-                finish()
+            firestore.collection("promos").document(promo.promoId!!)
+                .update(update)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Data is Edited", Toast.LENGTH_SHORT).show()
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                }
+        }else{
+            when{
+                tEPromoNameE.text.toString().isNullOrEmpty() ->tEPromoNameE.setError("Name Cannot Empty")
+                tEPromoCreDateE.text.toString().isNullOrEmpty() ->tEPromoCreDateE.setError("Created Date Cannot Empty")
+                tEPromoExpDateE.text.toString().isNullOrEmpty() ->tEPromoExpDateE.setError("Expired Date Cannot Empty")
+                tEPromoCostE.text.toString().isNullOrEmpty() ->tEPromoCostE.setError("Cost Cannot Empty")
+                tEPromoStockE.text.toString().isNullOrEmpty() ->tEPromoStockE.setError("Stock Cannot Empty")
+                tEPromoDescE.text.toString().isNullOrEmpty() ->tEPromoDescE.setError("Description Cannot Empty")
             }
+        }
 
     }
-
+    private fun IsInputValid() :Boolean{
+        return  when{
+            tEPromoNameE.text.toString().isNullOrEmpty() ->false
+            tEPromoCostE.text.toString().isNullOrEmpty() ->false
+            tEPromoStockE.text.toString().isNullOrEmpty() ->false
+            tEPromoDescE.text.toString().isNullOrEmpty() ->false
+            tEPromoExpDateE.text.toString().isNullOrEmpty() ->false
+            tEPromoCreDateE.text.toString().isNullOrEmpty() ->false
+            else -> true
+        }
+    }
     companion object {
         fun newIntent(context: Context, p: Promo): Intent {
             return Intent(context, EditPromoActivity::class.java).apply {

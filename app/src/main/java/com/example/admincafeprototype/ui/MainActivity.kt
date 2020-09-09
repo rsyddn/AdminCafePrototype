@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.admincafeprototype.R
@@ -54,6 +55,13 @@ class MainActivity : AppCompatActivity() {
                     // Firebase Register
                     register(email, pass)
                     bottomSheet.dismiss()
+                }else{
+                    Toast.makeText(
+                        this,
+                        "Password and Re-type password not same",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
                 }
             }
         } else {
@@ -73,6 +81,12 @@ class MainActivity : AppCompatActivity() {
                     firestore.collection("users").document(firebaseAuth.uid!!).get()
                         .addOnSuccessListener { document ->
                             if (document?.get("role-type") == "admin") {
+                                Toast.makeText(
+                                    this,
+                                    "Login success",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
                                 startActivity(Intent(this, HomeActivity::class.java))
                             } else if (document?.get("role-type") == "player") {
                                 Toast.makeText(
@@ -112,8 +126,12 @@ class MainActivity : AppCompatActivity() {
                                 .show()
                         }
 
-                } else {
+                } else if(task.isCanceled){
                     Toast.makeText(this, "Register Failed!", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                else{
+                    Toast.makeText(this, "This email has already been taken", Toast.LENGTH_SHORT)
                         .show()
                 }
             }

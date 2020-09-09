@@ -6,27 +6,15 @@
     android:layout_height="match_parent"
     android:padding="@dimen/default_padding_margin"
     tools:context=".ui.MainActivity">
-
-    <TextView
-        android:id="@+id/AdminText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/title_start_activity"
-        android:text="Admin"
-        android:textSize="@dimen/title_app_name"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/Logo"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/tv_Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_padding_margin"
-        android:text="Kedai U.K.M"
-        android:textSize="@dimen/title_app_name"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/AdminText"
-        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_register"
@@ -36,7 +24,8 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_Title" />
+        app:layout_constraintRight_toLeftOf="@id/btn_login"
+        app:layout_constraintTop_toBottomOf="@id/iv_logo"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_login"
@@ -47,6 +36,7 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/btn_register"
-        app:layout_constraintTop_toBottomOf="@id/tv_Title" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_logo"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

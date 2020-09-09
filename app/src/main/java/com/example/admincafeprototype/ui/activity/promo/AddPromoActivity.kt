@@ -78,40 +78,64 @@ class AddPromoActivity : AppCompatActivity() {
         }
 
         buttonAddPromo.setOnClickListener {
-
-            val promoName = tEPromoName.text.toString()
-            val promoCost = tEPromoCost.text.toString()
-            val promoStock = tEPromoStock.text.toString()
-            val promoDesc = tEPromoDesc.text.toString()
-
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            //Expired Date
-            val expDate = tEPromoExpDate.text.toString()
-            val promoExpDate = dateFormat.parse(expDate)
-            //Create Date
-            val creDate = tEPromoCreDate.text.toString()
-            val promoCreDate = dateFormat.parse(creDate)
-
-            val promoId = firestore.collection("promos").document().id
-            val promoIsActive = true
-
-            val promo = Promo(
-                promoId,
-                promoName,
-                promoDesc,
-                promoStock.toInt(),
-                promoCost.toInt(),
-                promoCreDate,
-                promoExpDate,
-                promoIsActive
-            )
-
-            firestore.collection("promos").document(promoId)
-                .set(promo)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Data is Added", Toast.LENGTH_SHORT).show()
-                    finish()
+            if(IsInputValid()){
+                Input()
+            }else{
+                when{
+                    tEPromoName.text.toString().isNullOrEmpty() ->tEPromoName.setError("Name Cannot Empty")
+                    tEPromoCreDate.text.toString().isNullOrEmpty() ->tEPromoCreDate.setError("Created Date Cannot Empty")
+                    tEPromoExpDate.text.toString().isNullOrEmpty() ->tEPromoExpDate.setError("Expired Date Cannot Empty")
+                    tEPromoCost.text.toString().isNullOrEmpty() ->tEPromoCost.setError("Cost Cannot Empty")
+                    tEPromoStock.text.toString().isNullOrEmpty() ->tEPromoStock.setError("Stock Cannot Empty")
+                    tEPromoDesc.text.toString().isNullOrEmpty() ->tEPromoDesc.setError("Description Cannot Empty")
                 }
+            }
+        }
+
+    }
+
+    private fun Input() {
+        val promoName = tEPromoName.text.toString()
+        val promoCost = tEPromoCost.text.toString()
+        val promoStock = tEPromoStock.text.toString()
+        val promoDesc = tEPromoDesc.text.toString()
+
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+
+        var expDate = tEPromoExpDate.text.toString()
+        val creDate = tEPromoCreDate.text.toString()
+        val promoCreDate = dateFormat.parse(creDate)
+        val promoExpDate = dateFormat.parse(expDate)
+        val promoId = firestore.collection("promos").document().id
+        val promoIsActive = true
+        val promo = Promo(
+            promoId,
+            promoName,
+            promoDesc,
+            promoStock.toInt(),
+            promoCost.toInt(),
+            promoCreDate,
+            promoExpDate,
+            promoIsActive
+        )
+        firestore.collection("promos").document(promoId)
+            .set(promo)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Data is Added", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+    }
+    private fun IsInputValid() :Boolean{
+        return  when{
+            tEPromoName.text.toString().isNullOrEmpty() ->false
+            tEPromoCost.text.toString().isNullOrEmpty() ->false
+            tEPromoStock.text.toString().isNullOrEmpty() ->false
+            tEPromoDesc.text.toString().isNullOrEmpty() ->false
+            tEPromoExpDate.text.toString().isNullOrEmpty() ->false
+            tEPromoCreDate.text.toString().isNullOrEmpty() ->false
+            else -> true
         }
     }
+
+
 }

@@ -19,14 +19,18 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, mCurrentFragment!!)
-                .commit()
+            mCurrentFragment?.let {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, it)
+                    .commit()
+            }
         } else {
             mCurrentFragment = supportFragmentManager.getFragment(savedInstanceState, "FRAGMENT")
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, mCurrentFragment!!)
-                .commit()
+            mCurrentFragment?.let {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, it)
+                    .commit()
+            }
         }
         setUp()
     }
